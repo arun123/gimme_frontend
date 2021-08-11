@@ -1,0 +1,161 @@
+<div class="container-element">
+    <h1 class="mat-h1">Dashboard</h1>
+    <mat-grid-list cols="2" rowHeight="500px">
+      <mat-grid-tile  [colspan]="2" >
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              Available Books
+              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Expand</button>
+                <button mat-menu-item>Remove</button>
+              </mat-menu>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+
+            <mat-form-field appearance="standard">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            </mat-form-field>
+
+            <mat-table class="mat-elevation-z3 table-list" *ngIf="dataSource !== undefined; else elseBlock" [dataSource]="dataSource">
+            
+              <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef> Book </mat-header-cell>
+                  <mat-cell *matCellDef="let stock"> {{ stock.book.name }} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="author">
+                <mat-header-cell *matHeaderCellDef> Author </mat-header-cell>
+                <mat-cell *matCellDef="let stock"> {{ stock.book.author.name }} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="genre">
+                <mat-header-cell *matHeaderCellDef> Genre </mat-header-cell>
+                <mat-cell *matCellDef="let stock"> 
+                  
+                  <mat-chip-list
+                  class="example-chip"
+                  cdkDropList 
+                  cdkDropListOrientation="horizontal"
+                  >
+                  <mat-chip
+                    class="example-box"
+                    color="accent"
+                    cdkDrag
+                    *ngFor="let genre of stock.book.genres">
+                    {{genre.name}}
+                  </mat-chip>
+                </mat-chip-list>
+                
+                </mat-cell>
+              </ng-container>
+
+
+              <ng-container matColumnDef="stock">
+                  <mat-header-cell *matHeaderCellDef> stock </mat-header-cell>
+                  <mat-cell *matCellDef="let stock"> {{ available(stock) }} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="actions">
+                  <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                  <mat-cell *matCellDef="let stock">
+                      <button mat-button (click)="leaseBook(stock)">Lease</button>
+                  </mat-cell>
+              </ng-container>
+      
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+        
+
+
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+        <mat-grid-tile  [colspan]="2">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              Leased Books
+              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Expand</button>
+                <button mat-menu-item>Remove</button>
+              </mat-menu>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <mat-table class="mat-elevation-z3 table-list" *ngIf="dataSourceLH !== undefined; else elseBlock" [dataSource]="dataSourceLH">
+            
+              <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef> Book </mat-header-cell>
+                  <mat-cell *matCellDef="let leaseHistory"> {{ leaseHistory.stock.book.name }} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="author">
+                <mat-header-cell *matHeaderCellDef> Author </mat-header-cell>
+                <mat-cell *matCellDef="let leaseHistory"> {{ leaseHistory.stock.book.author.name }} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="genre">
+                <mat-header-cell *matHeaderCellDef> Genre </mat-header-cell>
+                <mat-cell *matCellDef="let leaseHistory"> 
+                  
+                  <mat-chip-list
+                  class="example-chip"
+                  cdkDropList 
+                  cdkDropListOrientation="horizontal"
+                  >
+                  <mat-chip
+                    class="example-box"
+                    color="accent"
+                    cdkDrag
+                    *ngFor="let genre of leaseHistory.stock.book.genres">
+                    {{genre.name}}
+                  </mat-chip>
+                </mat-chip-list>
+                
+                </mat-cell>
+              </ng-container>
+
+
+              <ng-container matColumnDef="dueDate">
+                  <mat-header-cell *matHeaderCellDef> Due Date </mat-header-cell>
+                  <mat-cell *matCellDef="let leaseHistory"> {{ getDate(leaseHistory.returnDate) }} </mat-cell>
+              </ng-container>
+  
+              <ng-container matColumnDef="returned">
+                <mat-header-cell *matHeaderCellDef> Returned </mat-header-cell>
+                <mat-cell *matCellDef="let leaseHistory"> {{ leaseHistory.returned }} </mat-cell>
+            </ng-container>
+
+              <ng-container matColumnDef="actions">
+                  <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                  <mat-cell *matCellDef="let leaseHistory">
+                      <button *ngIf="!leaseHistory.returned" mat-button (click)="returnBook(leaseHistory)">return</button>
+                  </mat-cell>
+              </ng-container>
+      
+              <mat-header-row *matHeaderRowDef="displayedColumnsLH"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsLH"></mat-row>
+          </mat-table>
+        
+
+
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+
+
+    </mat-grid-list>
+  </div>
+  

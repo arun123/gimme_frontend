@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{ data.type }} Book</h2>
+<ng-container *ngIf="bookForm">
+    <mat-dialog-content [formGroup]="bookForm">
+        <div class="form-container">
+            <div class="details-container">
+                <div>
+                <mat-form-field>
+                    <input matInput placeholder="Name" formControlName="name">
+                </mat-form-field>
+                </div>
+                <div>
+                <mat-form-field>
+                    <mat-select placeholder="Author" formControlName="author" [compareWith]="compareObjFn">
+                        <mat-option *ngFor="let author of authors" [value]="author">{{ author.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                </div>
+
+
+                <mat-selection-list #genreList formControlName="genres">
+                    <label>Choose Genre</label>
+                    <mat-list-option *ngFor="let genre of genres" [selected]="checkSelected(genre, 'genre')" [value]="genre" (click)="onGenreChanged(genreList)">{{ genre.name }} </mat-list-option>
+                </mat-selection-list>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="close()">Close</button>
+        <button mat-button color="primary" (click)="onSubmit()">Submit</button>
+    </mat-dialog-actions>
+</ng-container>

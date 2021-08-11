@@ -1,0 +1,45 @@
+mat-form-field {
+    width: 100%;
+}
+
+.actions {
+    text-align: center;
+}
+
+.login-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+
+    max-width: 400px;
+    width: 100%;
+    line-height: 1.4;
+    padding: 40px;
+    text-align: center;
+    background: #fff;
+    -webkit-box-shadow: 0 15px 15px -10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 15px -10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    font-size: 1.5em;
+}
+
+button.login {
+    width: 100%;
+}
+
+.error {
+    padding: 16px;
+    color: red;
+    margin-bottom: 1.25em;
+}
+
+.success {
+    padding: 16px;
+    color: green;
+    margin-bottom: 1.25em;
+}

@@ -1,0 +1,14 @@
+::ng-deep .mat-checkbox {
+    line-height: 40px;
+
+    label {
+        margin-bottom: 0 !important;
+    }
+}
+
+.form-container {
+    width: 400px;
+    .details-container > * {
+        width: 100%;
+    }
+}

@@ -1,0 +1,38 @@
+<div class="container-element">
+    <div class="header">
+        <h2>Users</h2>
+        <button *ngIf="authService.inAccess('admin.users.create')" class="btn btn-primary right" mat-raised-button (click)="openUserDialog('Create')"><mat-icon aria-hidden="false" aria-label="">add</mat-icon></button>
+    </div>
+
+    <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <div class="content">
+        <mat-table class="mat-elevation-z3 table-list" *ngIf="dataSource !== undefined; else elseBlock" [dataSource]="dataSource">
+            
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
+            </ng-container>
+            
+    
+            <ng-container matColumnDef="roles">
+                <mat-header-cell *matHeaderCellDef> Roles </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{ roleName(user.roles) }} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                    <button *ngIf="authService.inAccess('admin.users.update')" mat-button (click)="openUserDialog('Edit', user)"><mat-icon>edit</mat-icon></button>
+                    <button *ngIf="authService.inAccess('admin.users.delete')" mat-button (click)="onDelete(user)"><mat-icon>delete</mat-icon></button>
+                </mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+    </div>
+    <ng-template #elseBlock>No activities yet</ng-template>
+</div>

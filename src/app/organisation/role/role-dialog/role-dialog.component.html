@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>{{ data.type }} Role</h2>
+<ng-container *ngIf="roleForm">
+    <mat-dialog-content [formGroup]="roleForm">
+        <div class="form-container">
+            <div class="details-container">
+                <mat-form-field>
+                    <input matInput placeholder="Name" formControlName="name">
+                </mat-form-field>
+                
+                <mat-form-field>
+                    <input matInput placeholder="Role" formControlName="role">
+                </mat-form-field>
+                <mat-label>Access List</mat-label>
+                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" >
+                    <!-- This is the tree node template for leaf nodes -->
+                    <mat-tree-node *matTreeNodeDef="let node;" matTreeNodePadding>
+                        <!-- use a disabled button to provide padding for tree leaf -->
+                        <button mat-icon-button disabled></button>
+                        <mat-checkbox color="primary"
+                            [checked]="checklistSelection.isSelected(node)" 
+                            (change)="checklistSelection.toggle(node);">
+                            {{ node.displayName }}
+                        </mat-checkbox>
+                    </mat-tree-node>
+                    <!-- This is the tree node template for expandable nodes -->
+                    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                        <button mat-icon-button matTreeNodeToggle
+                                [attr.aria-label]="'toggle ' + node.name">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                        </mat-icon>
+                        </button>
+                        <mat-checkbox color="primary"
+                            [checked]="descendantsAllSelected(node)"
+                            [indeterminate]="descendantsPartiallySelected(node)" 
+                            (change)="todoItemSelectionToggle(node)">
+                            {{ node.displayName }}
+                        </mat-checkbox>
+                    </mat-tree-node>
+                </mat-tree>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="close()">Close</button>
+        <button mat-button color="primary" (click)="onSubmit()">Submit</button>
+    </mat-dialog-actions>
+</ng-container>

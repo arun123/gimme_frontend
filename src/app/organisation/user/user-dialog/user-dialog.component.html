@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{ type }} User</h2>
+<ng-container *ngIf="userForm">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <mat-dialog-content>
+            <div class="form-container">
+                <div class="details-container">
+                    <mat-form-field class="col">
+                        <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+                    </mat-form-field>
+                    <div formArrayName="roles" *ngFor="let role of getRoleControls(); let i = index">
+                        <mat-checkbox 
+                            color="primary"
+                            [formControlName]="i" 
+                            [checked]="role.value">
+                        {{ roles[i].name }}
+                        </mat-checkbox>
+                    </div>
+                    <mat-form-field class="col">
+                        <input matInput placeholder="Book Limit" formControlName="booklimit" autocomplete="off">
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput type="password" placeholder="Password" formControlName="password" autocomplete="off">
+                    </mat-form-field>          
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-button (click)="close()" type="button">Close</button>
+            <button mat-button color="primary" type="submit">Submit</button>
+        </mat-dialog-actions>
+    </form>
+</ng-container>

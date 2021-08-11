@@ -1,0 +1,8 @@
+<ul *ngIf="breadcrumbs" class="breadcrumbs">
+    <li *ngFor="let breadcrumb of breadcrumbs; last as isLast" class="item">
+        <a *ngIf="!isLast" [routerLink]="breadcrumb.path !== '' ? ['/admin', breadcrumb.path] : []"
+        >{{ breadcrumb.name|titlecase }}</a>
+        <!-- <span *ngIf="!isLast" class="separator">&nbsp;&raquo;&nbsp;</span> -->
+        <span *ngIf="isLast">{{ breadcrumb.name }}</span>
+    </li>
+</ul>

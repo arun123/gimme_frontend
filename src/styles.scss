@@ -1,0 +1,141 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/theming';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~flag-icon-css/css/flag-icon.min.css';
+// @import '~flexboxgrid/dist/flexboxgrid.css';
+
+@include mat-core();
+
+$custom-primary: mat-palette($mat-deep-purple);
+
+// Breakpoints
+$handset: 360px;
+$large-handset: 480px;
+$tablet: 640px; /* app drawer breakpoint */
+$large-tablet: 840px;
+$desktop: 960px;
+$large-desktop: 1280px;
+$x-large-desktop: 1440px;
+$xx-large-desktop: 1920px;
+
+// generate min-width breakpoint
+@mixin breakpoint($point) {
+    @media (min-width: $point) { @content ; }
+}
+// generate max-width breakpoint (use sparingly)
+@mixin breakpoint-max($point) {
+    @media (max-width: $point) { @content ; }
+}
+// generate min-height breakpoint
+@mixin height-breakpoint($point) {
+    @media (min-height: $point) { @content ; }
+}
+// generate max-height breakpoint (use sparingly)
+@mixin height-breakpoint-max($point) {
+    @media (min-height: $point) { @content ; }
+}
+
+@include breakpoint-max(600px) {
+    .fixed-topnav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 100% !important;
+    }
+}
+
+body {
+    font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.mat-dialog-actions {
+    padding-bottom: 16px !important;
+    button + button {
+        margin-left: 8px;
+    }
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.mat-grid-tile[align=left] .mat-figure {
+    justify-content: flex-start !important;
+}
+
+.mat-grid-tile[align=right] .mat-figure {
+    justify-content: flex-end !important;
+}
+
+.flex {
+    display: flex;
+
+    .align-center {
+        margin: auto;
+        align-self: center;
+    }
+    
+    .align-left {
+        margin-right: auto;
+        align-self: center;
+    }
+    
+    .align-right {
+        margin-left: auto;
+        align-self: center;
+    }
+    
+    .align-x-center {
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    .align-x-left {
+        margin-right: auto;
+    }
+    
+    .align-x-right {
+        margin-left: auto;
+    }
+    
+    .align-y-center {
+        align-self: center;
+    }
+    
+    .align-y-top {
+        align-self: flex-start;
+    }
+    
+    .align-y-bottom {
+        align-self: flex-end;
+    }
+}
+div.mat-tab-labels > div.mat-tab-label.mat-tab-disabled {
+    opacity: unset;
+    padding: 0;
+    min-width: 0;
+    margin-left: auto;
+    button {
+        margin: 0px 10px;
+    }
+}
+div.mat-tab-labels > div.mat-tab-label.mat-tab-disabled:hover {
+    background-color: unset;
+}

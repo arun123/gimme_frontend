@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>{{ data.type }} Genre</h2>
+<ng-container *ngIf="genreForm">
+    <mat-dialog-content [formGroup]="genreForm">
+        <div class="form-container">
+            <div class="details-container">
+                <mat-form-field>
+                    <input matInput placeholder="Name" formControlName="name">
+                </mat-form-field>
+                
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="close()">Close</button>
+        <button mat-button color="primary" (click)="onSubmit()">Submit</button>
+    </mat-dialog-actions>
+</ng-container>

@@ -1,0 +1,50 @@
+
+
+<div class="login-container" *ngIf="authService.hasUsers && isFormReady">
+    <div class="header center">Login</div>
+    <form [formGroup]="form" (ngSubmit)="login()">
+        <mat-form-field>
+            <input matInput type="text" id="username" placeholder="Username" autocomplete="off" formControlName="username"
+                required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="password" id="password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
+
+        <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+        <div *ngIf="request" class="success">{{ request.message }}</div>
+
+        <div class="actions">
+            <button mat-raised-button color="primary" type="submit" class="login" [disabled]="!form.valid">LOG IN</button>
+        </div>
+    </form>
+</div>
+
+<div class="login-container" *ngIf="! authService.hasUsers && isFormReady">
+    <div class="header center">Register Admin User</div>
+    <form [formGroup]="form" (ngSubmit)="register()">
+        <mat-form-field>
+            <input matInput type="text" id="username" placeholder="Username" autocomplete="off" formControlName="username"
+                required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="password" id="password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <input matInput type="password" id="confirmPass" placeholder="Confirm Password" formControlName="confirmPass" [errorStateMatcher]="matcher" required>
+            <mat-error *ngIf="form.hasError('notSame')">
+                Passwords do not match
+            </mat-error>  
+        </mat-form-field>
+
+        <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+        <div *ngIf="request" class="success">{{ request.message }}</div>
+
+        <div class="actions">
+            <button mat-raised-button color="primary" type="submit" class="login" [disabled]="!form.valid">REGISTER</button>
+        </div>
+    </form>
+</div>

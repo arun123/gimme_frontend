@@ -1,0 +1,34 @@
+.breadcrumbs {
+    background-color: #efefef;
+    display: block;
+    padding: 0;
+    margin: 0 0 16px;
+    .item {
+        display: inline-block;
+        a, span {
+            padding: 8px 16px;
+            display: block;
+            color: #5a5a5a;
+        }
+        a {
+            text-decoration: none;
+            &:hover {
+                color: #000;
+            }
+        }
+        span {
+            font-weight: bold;
+            color: #000;
+        }
+
+        position: relative;
+        &:not(:last-child) {
+            &:after {
+                position: absolute;
+                content: "»";
+                right: -3px;
+                top: 7px;
+            }
+        }
+    }
+}

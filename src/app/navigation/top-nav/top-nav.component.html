@@ -1,0 +1,21 @@
+<mat-toolbar 
+    [ngStyle]="{ 'min-width': (setMinWidth$ | async) === true ? '1420px' : 'auto' }" 
+    color="primary"
+    class="mat-elevation-z6">
+    <button *ngIf="authService.isLoggedIn()" mat-icon-button id="menu" (click)="navigationService.toggleNav()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span>Library</span>
+    <span class="fill-remaining-space"></span>
+    <div *ngIf="authService.isLoggedIn()">
+        <button id="user-menu" mat-button [matMenuTriggerFor]="beforeMenu" *ngIf="user">
+            {{ user.username }} 
+            <mat-icon>expand_more</mat-icon>
+        </button>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+            <!-- <button mat-menu-item [routerLink]="['/admin', 'profile']" routerLinkActive="router-link-active" >Profile</button> -->
+            <!-- <mat-divider></mat-divider> -->
+            <button mat-menu-item (click)="authService.logout()">Logout</button>
+        </mat-menu>
+    </div>
+</mat-toolbar>
